@@ -6,8 +6,11 @@ project Ada_2012_Extensions is
    for Source_Dirs use ("src/");
 
    for Main use ("ada_2012-strings-equal_case_insensitive",
+                 "ada_2012-strings-hash_case_insensitive",
                  "ada_2012-strings-less_case_insensitive",
-                 "ada_2012-strings-unbounded-hash_case_insensitive");
+                 "ada_2012-strings-unbounded-equal_case_insensitive",
+                 "ada_2012-strings-unbounded-hash_case_insensitive",
+                 "ada_2012-strings-unbounded-less_case_insensitive");
 
    package Builder  renames Ada_2005.Builder;
    package Compiler renames Ada_2005.Compiler;
