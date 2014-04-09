@@ -5,10 +5,9 @@ with "../../ahven/gnat/ahven_lib";
 
 project Test is
    for Source_Dirs use (".",
-                        "../../src/",
-                        "../../libesl/src/");
+                        "../../src/");
 
-   for Main use ("black-tests-run");
+   for Main use ("unit_tests-run");
 
    package Builder  renames Ada_2005.Builder;
    package Compiler renames Ada_2005.Compiler;

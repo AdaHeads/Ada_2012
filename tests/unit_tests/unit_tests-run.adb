@@ -3,7 +3,7 @@ with
   Ahven.Text_Runner;
 
 procedure Unit_Tests.Run is
-   Suite : Ahven.Framework.Test_Suite := Tests.Suite;
+   Suite : Ahven.Framework.Test_Suite := Unit_Tests.Suite;
 begin
    Ahven.Text_Runner.Run (Suite);
 end Unit_Tests.Run;

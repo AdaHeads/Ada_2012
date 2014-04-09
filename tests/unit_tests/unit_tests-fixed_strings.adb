@@ -12,42 +12,45 @@ package body Unit_Tests.Fixed_Strings is
    procedure Check;
 
    procedure Check is
-      procedure Equal (Left, Right : in String) return Boolean
+      function Equal (Left, Right : in String) return Boolean
         renames Ada_2012.Strings.Equal_Case_Insensitive;
-      procedure Less  (Left, Right : in String) return Boolean
+      function Less  (Left, Right : in String) return Boolean
         renames Ada_2012.Strings.Less_Case_Insensitive;
+      use Ahven;
    begin
+      pragma Style_Checks (Off); --  Tabular layout
       case Comparison is
          when '<' =>
-            Assert (not Equal (Left, Right), "Equal_Case_Insensitive");
-            Assert (not Equal (Right, Left), "Equal_Case_Insensitive");
+            Assert (not Equal (Left => Left,  Right => Right), "Equal_Case_Insensitive");
+            Assert (not Equal (Left => Right, Right => Left),  "Equal_Case_Insensitive");
 
-            Assert (Less (Left, Right),      "Less_Case_Insensitive");
-            Assert (not Less (Right, Left),  "Less_Case_Insensitive");
+            Assert (    Less  (Left => Left,  Right => Right), "Less_Case_Insensitive");
+            Assert (not Less  (Left => Right, Right => Left),  "Less_Case_Insensitive");
          when '=' =>
-            Assert (Equal (Left, Right),     "Equal_Case_Insensitive");
-            Assert (Equal (Right, Left),     "Equal_Case_Insensitive");
+            Assert (    Equal (Left => Left,  Right => Right), "Equal_Case_Insensitive");
+            Assert (    Equal (Left => Right, Right => Left),  "Equal_Case_Insensitive");
 
-            Assert (not Less (Left, Right),  "Less_Case_Insensitive");
-            Assert (not Less (Right, Left),  "Less_Case_Insensitive");
+            Assert (not Less  (Left => Left,  Right => Right), "Less_Case_Insensitive");
+            Assert (not Less  (Left => Right, Right => Left),  "Less_Case_Insensitive");
          when '>' =>
-            Assert (not Equal (Left, Right), "Equal_Case_Insensitive");
-            Assert (not Equal (Right, Left), "Equal_Case_Insensitive");
+            Assert (not Equal (Left => Left,  Right => Right), "Equal_Case_Insensitive");
+            Assert (not Equal (Left => Right, Right => Left),  "Equal_Case_Insensitive");
 
-            Assert (not Less (Left, Right),  "Less_Case_Insensitive");
-            Assert (Less (Right, Left),      "Less_Case_Insensitive");
+            Assert (not Less  (Left => Left,  Right => Right), "Less_Case_Insensitive");
+            Assert (    Less  (Left => Right, Right => Left),  "Less_Case_Insensitive");
       end case;
+      pragma Style_Checks (On);
    end Check;
 
-   procedure Empty ("", '=', "");
-   procedure Same_Case_Equal ("om3ahCae", '=', "om3ahCae");
-   procedure Case_Equal ("om3ahCaE", '=', "om3ahCae");
-   procedure Same_Case_Less  ("AAAAA", '<', "AABAA");
-   procedure Case_Less_Upper ("AAAAA", '<', "aabaa");
-   procedure Case_Less_Lower ("aaaaa", '<', "AABAA");
-   procedure Same_Case_Greater  ("AACAA", '>', "AABAA");
-   procedure Case_Greater_Upper ("AACAA", '>', "aabaa");
-   procedure Case_Greater_Lower ("aacaa", '>', "AABAA");
+   procedure Empty              is new Check ("", '=', "");
+   procedure Same_Case_Equal    is new Check ("om3ahCae", '=', "om3ahCae");
+   procedure Case_Equal         is new Check ("om3ahCaE", '=', "om3ahCae");
+   procedure Same_Case_Less     is new Check ("AAAAA", '<', "AABAA");
+   procedure Case_Less_Upper    is new Check ("AAAAA", '<', "aabaa");
+   procedure Case_Less_Lower    is new Check ("aaaaa", '<', "AABAA");
+   procedure Same_Case_Greater  is new Check ("AACAA", '>', "AABAA");
+   procedure Case_Greater_Upper is new Check ("AACAA", '>', "aabaa");
+   procedure Case_Greater_Lower is new Check ("aacaa", '>', "AABAA");
 
    overriding
    procedure Initialize (T : in out Test) is

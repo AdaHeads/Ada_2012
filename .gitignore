@@ -16,6 +16,7 @@
 /tests/results/
 
 # Generated test executables:
+/tests/unit_tests/unit_tests-run
 
 # Test output to clean up:
 
