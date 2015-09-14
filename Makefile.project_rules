@@ -7,11 +7,14 @@ endif
 ahven:
 	if [ ! -d ahven ]; then ( rm -f ahven && hg clone https://bitbucket.org/tkoskine/ahven ); fi
 	perl -i~ -lpe 's|external [(]"OS_VERSION", "[^"]"[)];|external ("OS_VERSION");|' ahven/gnat/ahven*.gpr
-	mkdir -p tests/results
 
 ahven-update: ahven
 	cd ahven && hg pull && hg update && hg revert --all
 	perl -i~ -lpe 's|external [(]"OS_VERSION", "[^"]"[)];|external ("OS_VERSION");|' ahven/gnat/ahven*.gpr
 
-.PHONY: ahven-update
+DEPENDENCY_UPDATES += ahven-update
+
+update: $(DEPENDENCY_UPDATES)
+
+.PHONY: $(DEPENDENCY_UPDATES) update
 
